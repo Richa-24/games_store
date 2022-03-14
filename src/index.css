@@ -23,3 +23,10 @@ h1{
   display: flex;
   /* justify-content: center; */
 }
+
+.cart{
+  display: flex;
+  flex-direction: column;
+  color: white;
+  align-items: center;
+}

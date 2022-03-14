@@ -1,8 +1,9 @@
 import React,{useState} from "react"
 import data from "../utils/games.json"
 
-export default function Games(){
+export default function Games({handleCart}){
 
+    const [gameData,setGameData]=useState(data)
     const [id,setId]=useState()
     const [isAdded,setIsAdded]=useState(false)
     const [cart,setCart]=useState([])
@@ -10,29 +11,45 @@ export default function Games(){
     console.log(data)
 
     const handleClick=(item)=>{
-        setIsAdded(true)
-        setId(item.id)
+
+        for(let i=0; i<gameData.length; i++){
+            if(gameData[i].id == item.id){
+                gameData[i].quantity++
+                break
+                // console.log(gameData[i])
+            }
+        }
         setCart([...cart,item])
-
-        // const element=document.getElementById(id)
-        // console.log(element)
+        handleCart(cart)
     }
 
-    const handleDec=()=>{
-
+    const handleDec=(id)=>{
+        for(let i=0; i<gameData.length; i++){
+            if(gameData[i].id == id){
+                gameData[i].quantity++
+                break
+                // console.log(gameData[i])
+            }
+        }
     }
 
-    const handleInc=()=>{
-
+    const handleInc=(id)=>{
+        for(let i=0; i<gameData.length; i++){
+            if(gameData[i].id == id){
+                gameData[i].quantity--
+                break
+                // console.log(gameData[i])
+            }
+        }
     }
-
+    console.log(gameData)
     console.log(cart)
     return (
         <>
         <div className="d-flex flex-wrap container"
         //  style={{border: "1px solid red"}}
          >
-         {data && data.map((item)=>(
+         {gameData && gameData.map((item)=>(
              <div key={item.id} className="heading col-6 d-flex justify-content-between py-2 px-5"> 
                  <div className="">
                  <div className="py-1">{item.heading}</div>
@@ -41,7 +58,7 @@ export default function Games(){
                  
                  <div>
                  <div>$ {item.price}</div>
-                 {isAdded && id == item.id ? 
+                 {item.quantity >= 1 ? 
                  <div className="d-flex justify-content-between">
                  <div className="me-4"><button type="button" id={item.id} class="btn btn-secondary" onClick={()=>handleDec(item.id)}>-</button></div>
                  <div className="ms-2"><button type="button" id={item.id} class="btn btn-secondary" onClick={()=>handleInc(item.id)}>+</button></div>
